@@ -95,7 +95,7 @@ public:
         cap = sz;
     }
 
-    void remove(unsigned int pos) {
+    void removepos(unsigned int pos) {
         assert(pos < sz);
         for(unsigned int i = pos; i < sz-1; i++) {
             storage[i] = storage[i+1];
@@ -114,6 +114,89 @@ public:
         
     }
 
+    void clear() {
+        sz = 0;
+    }
+
+    bool contains(const T &elem) const{
+         assert(!empty ());
+
+         int x=0;
+         for (unsigned int i=0; i< sz; i++){
+            if (storage[i]== elem){
+                x++;
+            }
+         }
+         return x>=1;
+        }
+
+    int find (const T &elem) const{
+         assert (!empty ());
+         int x;
+         for (unsigned int i=0; i<sz;i++){
+               if (storage[i]==elem){
+                return i;
+               }
+         }
+         
+         return -1;
+    }
+    
+    void removevalue(const T &elem){
+        assert (!empty());
+
+        for (unsigned int i=0; i<sz;i++){
+            if (storage[i]==elem){
+                for (unsigned int j=i; j<sz-1;j++){
+                    storage[j]=storage[j+1];
+                }
+                sz--;
+                return;
+            }
+            
+        }
+    }
+
+    void replace(const T &oldval,const T &newval){
+        assert(contains(oldval));
+        assert(!empty());
+
+        for (unsigned int i=0; i<sz;i++){
+            if (storage[i]==oldval){
+                storage[i]=newval;
+                return;
+            }
+        }
+    }
+
+    void removevalue_all(const T &elem){
+        assert (!empty());
+
+        for (unsigned int i=0; i<sz;i++){
+            if (storage[i]==elem){
+                storage[i]= storage[i+1];
+
+                for (unsigned int j=i; j<sz-1;j++){
+                    storage[j]=storage[j+1];
+                }
+                sz--;
+                i--;
+            }
+            
+        }
+    }
+    
+void replace_all(const T &oldval,const T &newval){
+        assert(contains(oldval));
+        assert(!empty());
+
+        for (unsigned int i=0; i<sz;i++){
+            if (storage[i]==oldval){
+                storage[i]=newval;
+                i--;
+            }
+        }
+    }
 
 
 private:
@@ -144,8 +227,9 @@ public:
 int main() {
     Vector<int> v(4532);
     for(int i = 0; i < 11; i++) {
-        v.push_back(i*10);
-    }
+    v.push_back(i * 10);
+    v.push_back(i * 10);
+}
     v.print();
     cout << v.front() << endl;
     cout << v.back() << endl;
@@ -154,10 +238,20 @@ int main() {
     v.back() = 200;
     v.at(5) = 10000;
     v.print();
-    v.remove(5);
+    v.removepos(5);
     v.print();
     v.erase(2, 4);
+     v.print(); 
+    cout << v.contains(200) << endl; 
+    //v.clear();
+    cout << v.find(30) << endl;
+    //v.removevalue(60);
+    //v.replace(30,100);
+    //v.removevalue_all(30);
+     v.replace_all(90,100);
     v.print();
+
+        
     v[4533] = 10;
 
 
